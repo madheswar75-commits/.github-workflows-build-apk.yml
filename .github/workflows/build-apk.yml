@@ -31,3 +31,6 @@ jobs:
         with:
           name: MeshLink-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+
+
+          
