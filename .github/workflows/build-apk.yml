@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout project
+      - name: Checkout repository
         uses: actions/checkout@v6
 
       - name: Setup Java
@@ -20,17 +20,20 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+      - name: Extract MeshLink ZIP
+        run: |
+          unzip -o MeshLink-Complete.zip -d meshlink-project
+
+      - name: Setup Gr
+        with:
+          gradle-version: '8.7'
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        working-directory: meshlink-project/MeshLink
+        run: gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MeshLink-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
-
-
-          
+          path: meshlink-project/MeshLink/app/build/outputs/apk/debug/*.apk
